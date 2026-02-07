@@ -14,12 +14,12 @@ def run():
     # Progress indicator
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("📚 Total Modules", "11", help="Complete learning modules")
+        st.metric("📚 Total Modules", "10", help="Complete learning modules")
     with col2:
         completed = len(st.session_state.get('completed', set()))
-        st.metric("✅ Your Progress", f"{completed}/11", help="Modules completed")
+        st.metric("✅ Your Progress", f"{completed}/10", help="Modules completed")
     with col3:
-        progress_pct = (completed / 11) * 100
+        progress_pct = (completed / 10) * 100
         st.metric("🎯 Completion", f"{progress_pct:.0f}%", help="Overall progress")
     
     st.markdown("---")
@@ -28,42 +28,101 @@ def run():
     st.subheader("🎓 Your Learning Path")
     
     modules = [
-        ("📊 Data Basics", "Understand data structures"),
-        ("📈 Regression", "Predict continuous values"),
-        ("🎯 Classification", "Categorize data points"),
-        ("🧠 Neural Networks", "Deep learning fundamentals"),
-        ("🖼️ CNN Visuals", "Computer vision mastery"),
-        ("🔤 Tokenization", "Text preprocessing"),
-        ("👁️ Attention", "Transformer mechanisms"),
-        ("✨ Generation", "Create with AI"),
-        ("🎓 Capstone", "Build complete systems")
+        ("Intro", "intro", "📚"),
+        ("Data Basics", "data_basics", "📊"),
+        ("Regression", "regression", "📈"),
+        ("Classification", "classification", "🎯"),
+        ("Neural Networks", "neural_networks", "🧠"),
+        ("CNN Visuals", "cnn_visuals", "🖼️"),
+        ("Tokenization", "genai_tokenization", "🔤"),
+        ("Attention", "genai_attention", "👁️"),
+        ("Generation", "genai_generation", "✨"),
+        ("Capstone", "capstone", "🎓")
     ]
     
-    # Create visual learning path
-    fig, ax = plt.subplots(figsize=(12, 6))
+    # Create visual learning path with enhanced design
+    fig, ax = plt.subplots(figsize=(14, 8), facecolor='#f8f9fa')
+    ax.set_facecolor('#ffffff')
     
-    # Create path points
+    # Create path points in a more dynamic curved pattern
     n_modules = len(modules)
-    x = np.linspace(0, 10, n_modules)
-    y = np.sin(x * 0.5) * 2 + 5
+    x = np.linspace(0, 12, n_modules)
+    # Create a smooth wave pattern that rises
+    y = 3 + 2.5 * np.sin(x * 0.6) + x * 0.3
     
-    # Draw path
-    ax.plot(x, y, 'b--', linewidth=2, alpha=0.3, label='Learning Path')
+    # Draw gradient path connecting the modules
+    for i in range(n_modules - 1):
+        # Create smooth curve between points
+        x_segment = np.linspace(x[i], x[i+1], 50)
+        y_segment = np.interp(x_segment, x, y)
+        
+        # Color gradient from blue to purple
+        colors_gradient = plt.cm.viridis(np.linspace(0.2, 0.9, n_modules))
+        ax.plot(x_segment, y_segment, color=colors_gradient[i], 
+                linewidth=4, alpha=0.6, solid_capstyle='round')
     
-    # Draw module points
-    colors = ['green' if i < completed else 'lightgray' for i in range(n_modules)]
-    ax.scatter(x, y, s=500, c=colors, edgecolors='black', linewidth=2, zorder=3)
-    
-    # Add labels
-    for i, (name, _) in enumerate(modules):
+    # Draw module points with beautiful styling
+    for i in range(n_modules):
+        # Determine color based on completion
+        if i < completed:
+            color = '#10b981'  # Green for completed
+            edge_color = '#059669'
+            size = 800
+        else:
+            color = '#e5e7eb'  # Light gray for incomplete
+            edge_color = '#9ca3af'
+            size = 700
+        
+        # Draw outer glow effect
+        ax.scatter(x[i], y[i], s=size + 200, c=color, alpha=0.2, 
+                  edgecolors='none', zorder=2)
+        
+        # Draw main circle
+        ax.scatter(x[i], y[i], s=size, c=color, 
+                  edgecolors=edge_color, linewidth=3, zorder=3)
+        
+        # Add number inside circle
         ax.text(x[i], y[i], str(i+1), ha='center', va='center', 
-                fontweight='bold', fontsize=12, color='white', zorder=4)
+                fontweight='bold', fontsize=14, color='white', zorder=4)
+        
+        # Add emoji above circle
+        name, module_name, emoji = modules[i]
+        ax.text(x[i], y[i] + 1.2, emoji, ha='center', va='bottom', 
+                fontsize=20, zorder=4)
+        
+        # Add module display name below circle
+        ax.text(x[i], y[i] - 1.2, name, ha='center', va='top', 
+                fontweight='bold', fontsize=10, color='#374151', zorder=4)
+        
+        # Add module technical name below display name
+        ax.text(x[i], y[i] - 1.7, f'({module_name})', ha='center', va='top', 
+                fontsize=7, color='#6b7280', style='italic', zorder=4)
     
-    ax.set_xlim(-0.5, 10.5)
-    ax.set_ylim(0, 10)
+    # Add progress arrow if there are completed modules
+    if completed > 0 and completed < n_modules:
+        arrow_x = x[completed - 1] + (x[completed] - x[completed - 1]) * 0.5
+        arrow_y = np.interp(arrow_x, x, y) + 2
+        ax.annotate('YOU ARE HERE', xy=(x[completed], y[completed]), 
+                   xytext=(arrow_x, arrow_y),
+                   fontsize=10, fontweight='bold', color='#dc2626',
+                   ha='center',
+                   arrowprops=dict(arrowstyle='->', color='#dc2626', lw=2))
+    
+    ax.set_xlim(-1, 13)
+    ax.set_ylim(-1, 12)
     ax.axis('off')
-    ax.set_title('Your AI Learning Journey', fontsize=16, fontweight='bold', pad=20)
     
+    # Add decorative title with gradient effect
+    title_text = 'Your AI Learning Journey'
+    ax.text(6, 11, title_text, fontsize=20, fontweight='bold', 
+            ha='center', color='#1f2937')
+    
+    # Add progress text
+    progress_text = f'{completed}/{n_modules} Modules Completed'
+    ax.text(6, 10.2, progress_text, fontsize=12, ha='center', 
+            color='#6b7280', style='italic')
+    
+    plt.tight_layout()
     st.pyplot(fig)
     
     st.markdown("---")
@@ -72,39 +131,43 @@ def run():
     st.subheader("📖 Course Modules")
     
     module_details = {
-        "📊 Data Basics": {
+        "1. Intro (intro) 📚": {
+            "desc": "Get started with AI fundamentals and core concepts",
+            "topics": ["What is AI?", "Machine learning basics", "AI applications", "Learning roadmap"]
+        },
+        "2. Data Basics (data_basics) 📊": {
             "desc": "Master data manipulation, visualization, and preprocessing techniques",
             "topics": ["Data structures", "Statistical analysis", "Data visualization", "Feature engineering"]
         },
-        "📈 Regression": {
+        "3. Regression (regression) 📈": {
             "desc": "Learn to predict continuous values with linear and polynomial models",
             "topics": ["Linear regression", "Polynomial regression", "Model evaluation", "Feature scaling"]
         },
-        "🎯 Classification": {
+        "4. Classification (classification) 🎯": {
             "desc": "Predict categories using various classification algorithms",
             "topics": ["Logistic regression", "Decision trees", "Model metrics", "Confusion matrices"]
         },
-        "🧠 Neural Networks": {
+        "5. Neural Networks (neural_networks) 🧠": {
             "desc": "Understand deep learning architecture and activation functions",
             "topics": ["Network architecture", "Activation functions", "Backpropagation", "Loss functions"]
         },
-        "🖼️ CNN Visuals": {
+        "6. CNN Visuals (cnn_visuals) 🖼️": {
             "desc": "Explore convolutional neural networks for computer vision",
             "topics": ["Convolution operations", "Pooling layers", "Feature maps", "Image classification"]
         },
-        "🔤 Tokenization": {
+        "7. Tokenization (genai_tokenization) 🔤": {
             "desc": "Learn how language models process and encode text",
             "topics": ["Text tokenization", "Subword encoding", "Vocabulary building", "Token embeddings"]
         },
-        "👁️ Attention": {
+        "8. Attention (genai_attention) 👁️": {
             "desc": "Master the attention mechanism powering modern transformers",
             "topics": ["Self-attention", "Multi-head attention", "Query-Key-Value", "Attention weights"]
         },
-        "✨ Generation": {
+        "9. Generation (genai_generation) ✨": {
             "desc": "Generate text using various sampling strategies",
             "topics": ["Autoregressive generation", "Temperature sampling", "Top-k sampling", "Nucleus sampling"]
         },
-        "🎓 Capstone": {
+        "10. Capstone (capstone) 🎓": {
             "desc": "Build and deploy a complete AI system from scratch",
             "topics": ["End-to-end pipeline", "Model training", "Evaluation", "Deployment"]
         }

@@ -17,7 +17,7 @@ if "completed" not in st.session_state:
 st.sidebar.title("🧠 AI Visual Canvas")
 st.sidebar.caption("Learn AI by Seeing It Think")
 
-progress = len(st.session_state.completed) / 10
+progress = len(st.session_state.completed) / 11
 st.sidebar.progress(progress)
 
 page = st.sidebar.radio(
