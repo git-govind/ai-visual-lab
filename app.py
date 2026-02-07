@@ -7,14 +7,14 @@ from modules import (
 )
 
 st.set_page_config(
-    page_title="AI Visual Lab",
+    page_title="AI Visual Canvas",
     layout="wide"
 )
 
 if "completed" not in st.session_state:
     st.session_state.completed = set()
 
-st.sidebar.title("🧠 AI Visual Lab")
+st.sidebar.title("🧠 AI Visual Canvas")
 st.sidebar.caption("Learn AI by Seeing It Think")
 
 progress = len(st.session_state.completed) / 10
@@ -54,4 +54,4 @@ pages = {
 pages[page].run()
 
 st.markdown("---")
-st.caption("© 2026 AI Visual Lab | Built by Govind Tiwari")
+st.caption("© 2026 AI Visual Canvas | Built by Govind Tiwari")

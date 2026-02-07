@@ -300,7 +300,7 @@ def run():
     st.success("""
     🎉 **Congratulations!**
     
-    You've completed the AI Visual Lab! You now understand:
+    You've completed the AI Visual Canvas! You now understand:
     - Data preprocessing and exploration
     - Regression and classification
     - Neural networks and deep learning

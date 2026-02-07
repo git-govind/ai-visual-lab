@@ -5,7 +5,7 @@ import time
 
 
 def run():
-    st.title("🤖 Welcome to AI Visual Lab")
+    st.title("🤖 Welcome to AI Visual Canvas")
     
     # Animated welcome message
     welcome_text = "Your Interactive Journey into Artificial Intelligence"

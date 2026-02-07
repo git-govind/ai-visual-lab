@@ -1,4 +1,4 @@
-# AI Visual Lab 🤖
+# AI Visual Canvas 🤖
 
 An interactive AI learning platform built with Streamlit that helps you understand artificial intelligence concepts through visualizations and hands-on examples.
 
@@ -20,8 +20,8 @@ An interactive AI learning platform built with Streamlit that helps you understa
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-visual-lab.git
-cd ai-visual-lab
+git clone https://github.com/YOUR_USERNAME/ai-visual-canvas.git
+cd ai-visual-canvas
 ```
 
 2. Install dependencies:
@@ -40,12 +40,12 @@ streamlit run app.py
 
 1. Build the Docker image:
 ```bash
-docker build -t ai-visual-lab .
+docker build -t ai-visual-canvas .
 ```
 
 2. Run the container:
 ```bash
-docker run -p 8501:8501 ai-visual-lab
+docker run -p 8501:8501 ai-visual-canvas
 ```
 
 3. Access the app at `http://localhost:8501`
@@ -53,7 +53,7 @@ docker run -p 8501:8501 ai-visual-lab
 ## Project Structure
 
 ```
-ai-visual-lab/
+ai-visual-canvas/
 │
 ├── app.py                      # Main application with navigation
 ├── requirements.txt            # Python dependencies

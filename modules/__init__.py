@@ -1,1 +1,1 @@
-# Module exports for AI Visual Lab
+# Module exports for AI Visual Canvas
