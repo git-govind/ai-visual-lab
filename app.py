@@ -1,30 +1,45 @@
 import streamlit as st
 from modules import (
-    welcome,
-    intro,
-    data_basics,
-    regression,
-    classification,
-    neural_networks,
-    cnn_visuals,
-    genai_tokenization,
-    genai_attention,
-    genai_generation,
+    welcome, intro, data_basics, regression, classification,
+    neural_networks, cnn_visuals,
+    genai_tokenization, genai_attention, genai_generation,
     capstone
 )
 
-# Configure page
 st.set_page_config(
     page_title="AI Visual Lab",
-    page_icon="🤖",
     layout="wide"
 )
 
-# Sidebar navigation
-st.sidebar.title("Navigation")
-modules = {
+if "completed" not in st.session_state:
+    st.session_state.completed = set()
+
+st.sidebar.title("🧠 AI Visual Lab")
+st.sidebar.caption("Learn AI by Seeing It Think")
+
+progress = len(st.session_state.completed) / 10
+st.sidebar.progress(progress)
+
+page = st.sidebar.radio(
+    "Learning Path",
+    [
+        "Welcome",
+        "Intro to AI",
+        "Data Basics",
+        "Regression",
+        "Classification",
+        "Neural Networks",
+        "CNN Visuals",
+        "GenAI: Tokenization",
+        "GenAI: Attention",
+        "GenAI: Generation",
+        "Capstone"
+    ]
+)
+
+pages = {
     "Welcome": welcome,
-    "Introduction": intro,
+    "Intro to AI": intro,
     "Data Basics": data_basics,
     "Regression": regression,
     "Classification": classification,
@@ -36,8 +51,7 @@ modules = {
     "Capstone": capstone
 }
 
-selected_module = st.sidebar.radio("Select Module", list(modules.keys()))
+pages[page].run()
 
-# Run selected module
-if selected_module in modules:
-    modules[selected_module].run()
+st.markdown("---")
+st.caption("© 2026 AI Visual Lab | Built by Govind Tiwari")
