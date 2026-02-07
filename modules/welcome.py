@@ -85,10 +85,8 @@ def run():
         ax.text(x[i], y[i], str(i+1), ha='center', va='center', 
                 fontweight='bold', fontsize=14, color='white', zorder=4)
         
-        # Add emoji above circle
+        # Get module info
         name, module_name, emoji = modules[i]
-        ax.text(x[i], y[i] + 1.2, emoji, ha='center', va='bottom', 
-                fontsize=20, zorder=4)
         
         # Add module display name below circle
         ax.text(x[i], y[i] - 1.2, name, ha='center', va='top', 
